@@ -9,18 +9,22 @@ const App = () => {
   // --------------FETCHING USERS FROM API--------
 
   useEffect(() => {
-    fetchApi();
+    fetchData();
   }, []);
 
-  async function fetchApi() {
+  async function fetchData() {
     try {
       let data = await fetch(
         "https://geektrust.s3-ap-southeast-1.amazonaws.com/adminui-problem/members.json"
       );
+      if (!data.ok) {
+        throw new Error("Failed to fetch data");
+      }
       let json = await data.json();
       setUsers(json);
     } catch (e) {
       console.log(e);
+      alert("Failed to fetch data");
     }
   }
 
